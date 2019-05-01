@@ -1,0 +1,67 @@
+package org.firstinspires.ftc.teamcode.SubAssembly.DriveTrain;
+
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
+import org.firstinspires.ftc.teamcode.SubAssembly.DriveTrain.DriveControl;
+import org.firstinspires.ftc.teamcode.SubAssembly.Leds.LedControl;
+import org.firstinspires.ftc.teamcode.SubAssembly.Sensors.IMUcontrol;
+import org.firstinspires.ftc.teamcode.Utilities.GamepadWrapper;
+
+/* Sub Assembly Test OpMode
+ * This TeleOp OpMode is used to test the functionality of the specific sub assembly
+ */
+// Assign OpMode type (TeleOp or Autonomous), name, and grouping
+@TeleOp(name = "Tilt Test", group = "Test")
+public class DriveUntilt extends LinearOpMode {
+
+    @Override
+    public void runOpMode() throws InterruptedException {
+
+        telemetry.addLine("Tilt Test: ");
+
+        /* initialize sub-assemblies
+         */
+        IMUcontrol Imu = new IMUcontrol();
+        DriveControl Drive = new DriveControl();
+
+        GamepadWrapper egamepad1 = new GamepadWrapper(gamepad1);
+        GamepadWrapper egamepad2 = new GamepadWrapper(gamepad2);
+
+        Imu.init(this);
+        Drive.init(this);
+
+        telemetry.update();
+
+        //waits for that giant PLAY button to be pressed on RC
+        waitForStart();
+
+        Imu.setStartAngle2();
+
+        //telling the code to run until you press that giant STOP button on RC
+        while (opModeIsActive()) {
+
+            egamepad1.updateEdge();
+            egamepad2.updateEdge();
+
+            Imu.update();
+            if ( (egamepad1.a.state) && (Imu.trueAngle2<10)) {
+                Drive.moveBackward(0.5);
+            }
+            else
+                Drive.stop();
+
+
+            if (egamepad1.b.released) {
+                Drive.DriveUntilTilt(0.5);
+            }
+
+            //SubAssembly.test();
+            telemetry.addLine("angle2: " +Imu.trueAngle2);
+            telemetry.update();
+
+            //let the robot have a little rest, sleep is healthy
+            sleep(40);
+        }
+    }
+}
