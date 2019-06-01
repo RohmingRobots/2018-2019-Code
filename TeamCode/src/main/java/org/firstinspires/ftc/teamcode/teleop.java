@@ -10,6 +10,7 @@ import org.firstinspires.ftc.teamcode.SubAssembly.Leds.LedControl;
 import org.firstinspires.ftc.teamcode.SubAssembly.Lift.LiftControl;
 import org.firstinspires.ftc.teamcode.SubAssembly.Miner.MinerControl;
 import org.firstinspires.ftc.teamcode.SubAssembly.Sensors.TofControl;
+import org.firstinspires.ftc.teamcode.SubAssembly.Vucam.VucamControl;
 import org.firstinspires.ftc.teamcode.Utilities.GamepadWrapper;
 
 /* Sub Assembly Test OpMode
@@ -45,6 +46,7 @@ public class teleop extends LinearOpMode {
         TofControl Tof = new TofControl();
         LedControl Led = new LedControl();
         MinerControl Miner = new MinerControl();
+        VucamControl Vucam = new VucamControl();
 
         GamepadWrapper egamepad1 = new GamepadWrapper(gamepad1);
         GamepadWrapper egamepad2 = new GamepadWrapper(gamepad2);
@@ -54,6 +56,7 @@ public class teleop extends LinearOpMode {
         Tof.init(this);
         Led.init(this);
         Miner.init(this);
+        Vucam.init(this);
 
         //time based variables
         ElapsedTime runtime = new ElapsedTime();
